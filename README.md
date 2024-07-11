@@ -53,7 +53,6 @@ Gut Goals is a web application designed to help users monitor their fruit and ve
 ## Future Improvements
 
 - Implement data visualization for weekly progress
-- Add client-side form validation
 - Enable editing and deleting of veggie entries
 - Improve user interface
 - Implement image and voice input for adding fruits and vegetables
