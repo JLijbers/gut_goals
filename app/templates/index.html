@@ -1,29 +1,59 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-6">
-        <h2>Add Veggie</h2>
-        <form id="addVeggieForm">
-            <div class="form-group">
-                <input type="text" class="form-control" id="veggieName" placeholder="Enter veggie name" required>
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card mb-4 shadow">
+            <div class="card-body">
+                <h2 class="card-title">Track Your Veggies</h2>
+                <form id="addVeggieForm">
+                    <div class="form-group">
+                        <textarea class="form-control" id="veggieName" rows="3" placeholder="Enter what you've eaten today..." required></textarea>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <button type="button" class="btn btn-secondary">Upload Image</button>
+                            <button type="button" class="btn btn-secondary">Record Audio</button>
+                        </div>
+                        <button type="submit" class="btn btn-secondary">Submit</button>
+                    </div>
+                </form>
             </div>
-            <button type="submit" class="btn btn-primary">Add Veggie</button>
-        </form>
-    </div>
-    <div class="col-md-6">
-        <h2>Weekly Progress</h2>
-        <div id="weeklyProgress"></div>
-    </div>
-</div>
-<div class="row mt-4">
-    <div class="col-md-6">
-        <h2>Weekly Veggies</h2>
-        <ul id="weeklyVeggies" class="list-group"></ul>
-    </div>
-    <div class="col-md-6">
-        <h2>Suggested Veggies</h2>
-        <ul id="suggestedVeggies" class="list-group"></ul>
+        </div>
+
+        <div class="card mb-4 shadow">
+            <div class="card-body">
+                <h2 class="card-title">Your Weekly Progress</h2>
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span>Veggies Consumed This Week:</span>
+                        <span class="h4 mb-0" id="weeklyProgress"></span>
+                    </div>
+                    <div class="progress">
+                        <div id="progressBar" class="progress-bar" role="progressbar" style="background-color: var(--color-secondary); width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4 shadow">
+                    <div class="card-body">
+                        <h2 class="card-title">Weekly Veggies</h2>
+                        <ul id="weeklyVeggies" class="list-group list-group-flush"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-4 shadow">
+                    <div class="card-body">
+                        <h2 class="card-title">Suggested Veggies</h2>
+                        <ul id="suggestedVeggies" class="list-group list-group-flush"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -55,7 +85,8 @@ $(document).ready(function() {
             data.veggies.forEach(function(veggie) {
                 $('#weeklyVeggies').append('<li class="list-group-item">' + veggie + '</li>');
             });
-            $('#weeklyProgress').text('Progress: ' + data.progress);
+            $('#weeklyProgress').text(data.count + '/30');
+            updateProgressBar(data.count);
         });
     }
 
@@ -66,6 +97,13 @@ $(document).ready(function() {
                 $('#suggestedVeggies').append('<li class="list-group-item">' + veggie + '</li>');
             });
         });
+    }
+
+    function updateProgressBar(count) {
+        const percentage = (count / 30) * 100;
+        $('#progressBar').css('width', percentage + '%').attr('aria-valuenow', percentage);
+        const remaining = 30 - count;
+        $('#remainingVeggies').text(remaining);
     }
 });
 </script>

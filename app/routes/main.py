@@ -33,8 +33,7 @@ def get_weekly_veggies():
         count = len(veggies)
         return jsonify({
             "veggies": veggies,
-            "count": count,
-            "progress": f"{count}/30"
+            "count": count
         })
     except ValueError as e:
         return jsonify({"error": str(e)}), 404
