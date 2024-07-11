@@ -13,9 +13,10 @@ def login():
     if request.method == 'POST':
         user = User.query.filter_by(username=request.form['username']).first()
         if user is None or not user.check_password(request.form['password']):
-            flash('Invalid username or password')
+            flash('Invalid username or password', 'danger')
             return redirect(url_for('auth.login'))
         login_user(user)
+        flash('Logged in successfully.', 'success')
         next_page = request.args.get('next')
         if not next_page or urlparse(next_page).netloc != '':
             next_page = url_for('main.index')
@@ -25,6 +26,7 @@ def login():
 @bp.route('/logout')
 def logout():
     logout_user()
+    flash('Logged out successfully.', 'success')
     return redirect(url_for('main.index'))
 
 @bp.route('/register', methods=['GET', 'POST'])
@@ -36,6 +38,6 @@ def register():
         user.set_password(request.form['password'])
         db.session.add(user)
         db.session.commit()
-        flash('Congratulations, you are now a registered user!')
+        flash('Congratulations, you are now a registered user!', 'success')
         return redirect(url_for('auth.login'))
     return render_template('auth/register.html')
