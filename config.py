@@ -7,3 +7,6 @@ class Config:
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
+    # Proxy configuration
+    PROXY_URL = os.getenv('PROXY_URL')

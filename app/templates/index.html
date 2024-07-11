@@ -36,6 +36,21 @@
             </div>
         </div>
 
+        <div class="card mb-4 shadow">
+            <div class="card-body">
+                <h2 class="card-title">Get Advice</h2>
+                <div class="d-flex justify-content-around">
+                    <button id="quickTipBtn" class="btn btn-primary">Quick & Easy Tip</button>
+                    <button id="recipeTipBtn" class="btn btn-primary">Recipe Tip</button>
+                    <button id="groupAnalysisBtn" class="btn btn-primary">Group Analysis</button>
+                </div>
+                <div class="mt-4">
+                    <h4>Advice:</h4>
+                    <p id="adviceOutput"></p>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-6">
                 <div class="card mb-4 shadow">
@@ -104,6 +119,29 @@ $(document).ready(function() {
         $('#progressBar').css('width', percentage + '%').attr('aria-valuenow', percentage);
         const remaining = 30 - count;
         $('#remainingVeggies').text(remaining);
+    }
+
+    // Advice button handlers
+    $('#quickTipBtn').click(function() {
+        getDietAdvice('quick_tip');
+    });
+
+    $('#recipeTipBtn').click(function() {
+        getDietAdvice('recipe_tip');
+    });
+
+    $('#groupAnalysisBtn').click(function() {
+        getDietAdvice('group_analysis');
+    });
+
+    function getDietAdvice(promptType) {
+        $.get(`/get_diet_advice/${promptType}`, function(data) {
+            if (data.error) {
+                $('#adviceOutput').text(data.error);
+            } else {
+                $('#adviceOutput').text(data.advice);
+            }
+        });
     }
 });
 </script>

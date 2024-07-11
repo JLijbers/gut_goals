@@ -23,3 +23,12 @@ GET http://127.0.0.1:5000/weekly_veggies
 
 ### Get veggie suggestions (requires authentication)
 GET http://127.0.0.1:5000/suggest_veggies
+
+### Get quick & easy tip (requires authentication)
+GET http://127.0.0.1:5000/get_diet_advice/quick_tip
+
+### Get recipe tip (requires authentication)
+GET http://127.0.0.1:5000/get_diet_advice/recipe_tip
+
+### Get vegetable/fruit group analysis (requires authentication)
+GET http://127.0.0.1:5000/get_diet_advice/group_analysis

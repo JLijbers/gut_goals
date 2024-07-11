@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request, render_template
 from flask_login import login_required, current_user
 from app.services.diet_tracking import DietTrackingService
+from app.services.recommendations import RecommendationService
 
 bp = Blueprint('main', __name__)
 
@@ -44,5 +45,14 @@ def suggest_veggies():
     try:
         suggestions = DietTrackingService.suggest_veggies(current_user.id)
         return jsonify({"suggestions": suggestions})
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 404
+    
+@bp.route('/get_diet_advice/<prompt_type>', methods=['GET'])
+@login_required
+def get_diet_advice(prompt_type):
+    try:
+        advice = RecommendationService.get_diet_advice(current_user.id, prompt_type)
+        return jsonify({"advice": advice})
     except ValueError as e:
         return jsonify({"error": str(e)}), 404
