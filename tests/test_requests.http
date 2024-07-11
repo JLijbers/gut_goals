@@ -1,0 +1,25 @@
+### Register a new user
+POST http://127.0.0.1:5000/register
+Content-Type: application/x-www-form-urlencoded
+
+username=testuser&email=testuser@example.com&password=testpassword
+
+### Login
+POST http://127.0.0.1:5000/login
+Content-Type: application/x-www-form-urlencoded
+
+username=testuser&password=testpassword
+
+### Add a veggie (requires authentication)
+POST http://127.0.0.1:5000/add_veggie
+Content-Type: application/json
+
+{
+    "veggie_name": "carrot"
+}
+
+### Get weekly veggies (requires authentication)
+GET http://127.0.0.1:5000/weekly_veggies
+
+### Get veggie suggestions (requires authentication)
+GET http://127.0.0.1:5000/suggest_veggies

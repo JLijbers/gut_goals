@@ -3,15 +3,6 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# Virtual environment
-venv/
-
-# Flask
-instance/
-
-# Environment variables
-.env
-
 # IDE files
 .vscode/
 .idea/
@@ -19,3 +10,79 @@ instance/
 # OS generated files
 .DS_Store
 Thumbs.db
+ehthumbs.db
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# Translations
+*.mo
+*.pot
+
+# Flask specific
+instance/
+.webassets-cache
+scrapbook/
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Database
+*.sqlite3
+*.db
+
+# Alembic
+migrations/versions/*.pyc
+migrations/versions/*.pyc
+migrations/versions/*/__pycache__
+
+# Log files
+*.log
