@@ -47,6 +47,20 @@ def suggest_veggies():
         return jsonify({"suggestions": suggestions})
     except ValueError as e:
         return jsonify({"error": str(e)}), 404
+
+@bp.route('/weekly_consumption_data', methods=['GET'])
+@login_required
+def get_weekly_consumption_data():
+    try:
+        consumption_data = DietTrackingService.get_weekly_fruit_veggie_consumption(current_user.id)
+        labels = list(consumption_data.keys())
+        quantities = [item['quantity'] for item in consumption_data.values()]
+        dates = [", ".join(map(str, item['dates'])) for item in consumption_data.values()]
+        colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40']  # Example colors
+        return jsonify({"labels": labels, "quantities": quantities, "dates": dates, "colors": colors})
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 404
+
     
 @bp.route('/get_diet_advice/<prompt_type>', methods=['GET'])
 @login_required

@@ -35,6 +35,27 @@ class DietTrackingService:
         return len(weekly_veggies)
 
     @staticmethod
+    def get_weekly_fruit_veggie_consumption(user_id):
+        user = User.query.get(user_id)
+        if not user:
+            raise ValueError("User not found")
+        
+        one_week_ago = datetime.utcnow() - timedelta(days=7)
+        weekly_entries = VeggieEntry.query.filter(
+            VeggieEntry.user_id == user_id,
+            VeggieEntry.date >= one_week_ago
+        ).all()
+        
+        consumption_data = {}
+        for entry in weekly_entries:
+            if entry.veggie_name not in consumption_data:
+                consumption_data[entry.veggie_name] = {'quantity': 0, 'dates': []}
+            consumption_data[entry.veggie_name]['quantity'] += 1
+            consumption_data[entry.veggie_name]['dates'].append(entry.date)
+        
+        return consumption_data
+
+    @staticmethod
     def suggest_veggies(user_id):
         all_veggies = [
             "spinach", "kale", "broccoli", "carrots", "tomatoes", "bell peppers",

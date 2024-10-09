@@ -38,6 +38,15 @@
 
         <div class="card mb-4 shadow">
             <div class="card-body">
+                <h2 class="card-title">Your Weekly Consumption</h2>
+                <div id="pieChartContainer">
+                    <canvas id="consumptionPieChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4 shadow">
+            <div class="card-body">
                 <h2 class="card-title">Get Advice</h2>
                 <div class="d-flex justify-content-around">
                     <button id="quickTipBtn" class="btn btn-primary">Quick & Easy Tip</button>
@@ -72,6 +81,7 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 $(document).ready(function() {
     // Load initial data
@@ -120,6 +130,34 @@ $(document).ready(function() {
         const remaining = 30 - count;
         $('#remainingVeggies').text(remaining);
     }
+
+    // Initialize and render the pie chart
+    $.get('/weekly_consumption_data', function(data) {
+        const ctx = document.getElementById('consumptionPieChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    data: data.quantities,
+                    backgroundColor: data.colors
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                const index = tooltipItem.dataIndex;
+                                return `${data.labels[index]}: ${data.quantities[index]} (${data.dates[index]})`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
 
     // Advice button handlers
     $('#quickTipBtn').click(function() {
